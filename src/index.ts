@@ -1,41 +1,34 @@
 export class Item {
-  name: string;
-  sellIn: number;
-  quality: number;
-
-  constructor(name: string, sellIn: number, quality: number) {
-    this.name = name;
-    this.sellIn = sellIn;
-    this.quality = quality;
-  }
+  constructor(public name: string, public sellIn: number, public quality: number) { }
 }
 
 export class GildedRose {
-  items: Array<Item>;
-
-  constructor(items: Array<Item> = []) {
-    this.items = items;
-  }
+  constructor(public items: Item[] = []) { }
 
   updateQuality() {
     for (const item of this.items) {
       this.updateItemQuality(item);
+      item.sellIn--;
     }
 
     return this.items;
   }
 
   private updateItemQuality(item: Item) {
-    if (item.name === "Aged Brie") {
-      this.updateAgedBrie(item);
-    } else if (item.name === "Backstage passes to a TAFKAL80ETC concert") {
-      this.updateBackstagePasses(item);
-    } else if (item.name === "Sulfuras, Hand of Ragnaros") {
-    } else {
-      this.updateNormalItem(item);
+    switch (item.name) {
+      case "Aged Brie":
+        this.updateAgedBrie(item);
+        break;
+      case "Backstage passes to a TAFKAL80ETC concert":
+        this.updateBackstagePasses(item);
+        break;
+      case "Sulfuras, Hand of Ragnaros":
+        // Nothing to do for Sulfuras
+        break;
+      default:
+        this.updateNormalItem(item);
+        break;
     }
-
-    item.sellIn--;
   }
 
   private updateAgedBrie(item: Item) {
@@ -47,15 +40,11 @@ export class GildedRose {
   private updateBackstagePasses(item: Item) {
     if (item.quality < 50) {
       item.quality++;
-      if (item.sellIn < 11) {
-        if (item.quality < 50) {
-          item.quality++;
-        }
+      if (item.sellIn < 11 && item.quality < 50) {
+        item.quality++;
       }
-      if (item.sellIn < 6) {
-        if (item.quality < 50) {
-          item.quality++;
-        }
+      if (item.sellIn < 6 && item.quality < 50) {
+        item.quality++;
       }
     }
     if (item.sellIn < 0) {
@@ -66,9 +55,9 @@ export class GildedRose {
   private updateNormalItem(item: Item) {
     if (item.quality > 0) {
       item.quality--;
-    }
-    if (item.sellIn < 0 && item.quality > 0) {
-      item.quality--;
+      if (item.sellIn < 0 && item.quality > 0) {
+        item.quality--;
+      }
     }
   }
 }
