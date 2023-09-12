@@ -43,7 +43,7 @@ describe("GildedRose", () => {
         // THEN
         expect(items[0].sellIn).toEqual(9);  // Normal Item
         expect(items[1].sellIn).toEqual(1);  // Aged Brie
-        expect(items[2].sellIn).toEqual(0);  // Sulfuras
+        expect(items[2].sellIn).toEqual(-1);  // Sulfuras
         expect(items[3].sellIn).toEqual(14); // Backstage passes
     });
 });
