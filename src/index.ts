@@ -23,7 +23,6 @@ export class GildedRose {
         this.updateBackstagePasses(item);
         break;
       case "Sulfuras, Hand of Ragnaros":
-        // Nothing to do for Sulfuras
         break;
       default:
         this.updateNormalItem(item);
